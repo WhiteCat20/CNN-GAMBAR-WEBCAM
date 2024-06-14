@@ -1,13 +1,14 @@
-
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.preprocessing import image
 import cv2
 import easygui
-
+from rembg import remove
+from PIL import Image
 
 # Load the TFLite model
-interpreter = tf.lite.Interpreter(model_path='02062024-234854.tflite')
+interpreter = tf.lite.Interpreter(model_path='model webcam.tflite')
 interpreter.allocate_tensors()
 
 # Get input and output tensors
@@ -17,7 +18,9 @@ output_details = interpreter.get_output_details()
 
 input_path = easygui.fileopenbox(title='Select Image File')
 # img = image.load_img(test_image_path)
-img = cv2.imread(str(input_path))
+# img = cv2.imread(str(input_path))
+img = Image.open(input_path)
+# img = remove(img)
 img = cv2.resize(img, (200, 200))
 
 
